@@ -26,10 +26,10 @@
                 <td><?= $l['valor'] ?></td>
                 <td><?= $l['categoria'] ?></td>
                 <td>
-                    <a href="alterar_produto.php" class="btn btn-warning">
+                    <a href="alterar_produto.php?id=<?= $l['id'] ?> "class="btn btn-warning">
                         Alterar
                     </a>
-                    <a href="excluir_produto.php" class="btn btn-danger">
+                    <a href="excluir_produto.php?id=<?= $l['id'] ?>  "class="btn btn-danger">
                         Excluir
                     </a>
                 </td> 
@@ -43,3 +43,5 @@
 
 <?php   
     require_once("../rodape.html");
+
+   

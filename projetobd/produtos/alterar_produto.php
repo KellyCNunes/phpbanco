@@ -1,5 +1,7 @@
 <?php
     require_once("../cabecalho.php");
+    $id = $_GET['id'];
+    $dados = consultarProdutoId($id);
 
 ?>
 
@@ -7,7 +9,8 @@
     <form>
         <div class="row">
             <label for="nome" class="form-label">Informe o nome</label>
-            <input type ="text" class="form-control" name="nome"> 
+            <input type ="text" class="form-control" name="nome"
+                value="<?=$dados['nome']?>">
         </div>
         <div class="row">
             <label for="descricao" class="form-label">Informe a descrição</label>

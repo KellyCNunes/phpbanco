@@ -38,4 +38,14 @@
         } catch (Exception $e){
             return 0;
         } 
+
+    function consultarProduto($id){
+        try{
+        $sql = "SELECT * FROM produto WHERE id= :id";
+        $conexao = conectarBanco();
+        } catch (Exception $e) {
+            return 0;
+        }
+    
+    }
     }

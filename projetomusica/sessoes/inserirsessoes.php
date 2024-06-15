@@ -10,7 +10,7 @@
         </div>
         <div class="row">
             <label for="Horario" class="form-label">Informe o horário</label>
-            <input type ="text" class="form-control" name="descricao"> 
+            <input type ="text" class="form-control" name="Horario"> 
         </div>
         <div class="row">
             <label for="musico" class="form-label">Informe o músico</label>

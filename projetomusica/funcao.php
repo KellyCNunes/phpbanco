@@ -28,7 +28,7 @@
 
     function consultarFaixaId($idFaixas){
         try{ 
-            $sql = "SELECT * FROM produto WHERE idFaixas = :idFaixas"; //???
+            $sql = "SELECT * FROM faixa WHERE idFaixas = :idFaixas"; //???
             $conexao = conectarBanco();
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":idFaixas", $idFaixas); //????
@@ -42,7 +42,7 @@
     
     function alterarFaixa($nome, $duracao, $sessao_id){
         try{ 
-            $sql = "UPDATE produto SET nome = :nome, duracao = :duracao, sessao_id = :sessoes WHERE idFaixas = :idFaixas";
+            $sql = "UPDATE faixa SET nome = :nome, duracao = :duracao, sessao_id = :sessoes WHERE idFaixas = :idFaixas";
             $conexao = conectarBanco();
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":nome", $nome);
@@ -58,7 +58,7 @@
    
     function excluirFaixa($idFaixas){
         try{ 
-            $sql = "DELETE FROM produto WHERE idFaixas = :idFaixas";
+            $sql = "DELETE FROM faixa WHERE idFaixas = :idFaixas";
             $conexao = conectarBanco();
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":idFaixas", $idFaixas);
@@ -81,6 +81,48 @@
     function listarMusicos(){
         $conexao = conectarBanco();
         return $conexao->query("SELECT * FROM Musicos");
+    }
+
+    function consultarMusicosId($id){
+        try{ 
+            $sql = "SELECT * FROM musicos WHERE idMusicos = :idMusicos";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":idMusicos", $idMusicos);
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (Exception $e){
+            return 0;
+        }
+    }
+    
+    
+    function alterarMusicos($nome, $descricao, $valor, $categoria){
+        try{ 
+            
+            $sql = "UPDATE musicos SET nome = :nome, instrumento = :instrumento, estilo_musical = :estilo_musical";
+            $conexao = conectarBanco();
+            $stmt->bindValue(":nome", $nome);
+            $stmt->bindValue(":instrumento", $instrumento);
+            $stmt->bindValue(":estilo_musical", $estilo_musical);
+            
+            return $stmt->execute();
+        } catch (Exception $e){
+            return 0;
+        }
+    }
+    
+    
+    function excluirMusicos($id){
+        try{ 
+            $sql = "DELETE FROM musicos WHERE idMusicos = :idMusicos";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":idMusicos", $idMusicos);
+            return $stmt->execute();
+        } catch (Exception $e){
+            return 0;
+        }
     }
 
 
@@ -119,13 +161,13 @@
 //???????
     function alterarGravacoes($titulo, $dada, $musico, $idMusicos){
         try{ 
-            $sql = "UPDATE produto SET titulo = :titulo, dada = :dada, idMusicos = :musicos WHERE id = :id";
+            $sql = "UPDATE produto SET titulo = :titulo, dada = :dada, idMusicos = :musicos WHERE idGravacoes = :idGravacoes";
             $conexao = conectarBanco();
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":titulo", $titulo);
             $stmt->bindValue(":dada", $dada);
             $stmt->bindValue(":musicos", $idMusicos);
-            $stmt->bindValue(":id", $id);
+            $stmt->bindValue(":idGravacoes", $idGravacoes);
             return $stmt->execute();
         } catch (Exception $e){
             return 0;
@@ -134,10 +176,10 @@
     
     function excluirGravacoes($id){
         try{ 
-            $sql = "DELETE FROM produto WHERE id = :id";
+            $sql = "DELETE FROM produto WHERE idGravacoes = :idGravacoes";
             $conexao = conectarBanco();
             $stmt = $conexao->prepare($sql);
-            $stmt->bindValue(":id", $id);
+            $stmt->bindValue(":idGravacoes", $idGravacoes);
             return $stmt->execute();
         } catch (Exception $e){
             return 0;
@@ -148,7 +190,7 @@
     
     function adicionarSessoes($data, $horario){
         $conexao = conectarBanco();
-        $stmt = $conexao->prepare("INSERT INTO SessoesGravacao (data, horario) VALUES (?, ?)");
+        $stmt = $conexao->prepare("INSERT INTO SessoesGravacao (data, horario, musico) VALUES (?, ?)");
         $stmt->execute([$data, $horario]);
     }
 
@@ -162,134 +204,43 @@
             return 0;
         }
     }
-    
-    
-    
 
-    
-
-   
-
-
-
-
-//musicos
-function consultarMusicosId($id){
-    try{ 
-        //Defino uma variável para declarar o SQL a ser executado
-        $sql = "SELECT * FROM produto WHERE id = :id";
-        //Realizo a conexão com o banco de dados
-        $conexao = conectarBanco();
-        //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
-        $stmt = $conexao->prepare($sql);
-        $stmt->bindValue(":id", $id);
-        //Executo a consulta
-        $stmt->execute();
-        //Retorno o registro já em formato de ARRAY
-        return $stmt->fetch();
-    } catch (Exception $e){
-        //Caso aconteça algum erro, retorno o valor 0
-        return 0;
+    function consultarSessoesId($id){
+        try{ 
+            $sql = "SELECT * FROM sessoes WHERE idSessoes = :idSessoes";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":idSessoes", $idSessoes);
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (Exception $e){
+            return 0;
+        }
     }
-}
 
-//Função que realiza a alteração de um produto
-function alterarMusicos($nome, $descricao, $valor, $categoria){
-    try{ 
-        //Defino uma variável para declarar o SQL a ser executado
-        $sql = "UPDATE produto SET nome = :nome, descricao = :descricao, valor = :valor, categoria_id = :categoria WHERE id = :id";
-        //Realizo a conexão com o banco de dados
-        $conexao = conectarBanco();
-        //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
-        $stmt = $conexao->prepare($sql);
-        $stmt->bindValue(":nome", $nome);
-        $stmt->bindValue(":descricao", $descricao);
-        $stmt->bindValue(":valor", $valor);
-        $stmt->bindValue(":categoria", $categoria);
-        
-        //Executo a consulta, retornando o seu resultado
-        return $stmt->execute();
-    } catch (Exception $e){
-        //Caso aconteça algum erro, retorno o valor 0
-        return 0;
+    function alterarSessoes($data, $horario, $musico){
+        try{ 
+            $sql = "UPDATE sessoes SET data = :data, horario = :horario, musico = :musico WHERE idSessoes = :idSessoes";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":data", $data);
+            $stmt->bindValue(":horario", $horario);
+            $stmt->bindValue(":musico", $musico);
+            $stmt->bindValue(":idSessoes", $idSessoes);
+            return $stmt->execute();
+        } catch (Exception $e){
+            return 0;
+        }
     }
-}
 
-//Função que realiza a exclusão de um produto
-function excluirMusicos($id){
-    try{ 
-        //Defino uma variável para declarar o SQL a ser executado
-        $sql = "DELETE FROM produto WHERE id = :id";
-        //Realizo a conexão com o banco de dados
-        $conexao = conectarBanco();
-        //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
-        $stmt = $conexao->prepare($sql);
-        $stmt->bindValue(":id", $id);
-        //Executo a consulta, retornando o seu resultado
-        return $stmt->execute();
-    } catch (Exception $e){
-        //Caso aconteça algum erro, retorno o valor 0
-        return 0;
+    function excluirSessoes($id){
+        try{ 
+            $sql = "DELETE FROM sessoes WHERE idSessoes = :idSessoes";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":idSessoes", $idSessoes);
+            return $stmt->execute();
+        } catch (Exception $e){
+            return 0;
+        }
     }
-}
-
-
-//sessoes
-function consultarSessoesId($id){
-    try{ 
-        //Defino uma variável para declarar o SQL a ser executado
-        $sql = "SELECT * FROM produto WHERE id = :id";
-        //Realizo a conexão com o banco de dados
-        $conexao = conectarBanco();
-        //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
-        $stmt = $conexao->prepare($sql);
-        $stmt->bindValue(":id", $id);
-        //Executo a consulta
-        $stmt->execute();
-        //Retorno o registro já em formato de ARRAY
-        return $stmt->fetch();
-    } catch (Exception $e){
-        //Caso aconteça algum erro, retorno o valor 0
-        return 0;
-    }
-}
-
-//Função que realiza a alteração de um produto
-function alterarSessoes($nome, $descricao, $valor, $categoria, $id){
-    try{ 
-        //Defino uma variável para declarar o SQL a ser executado
-        $sql = "UPDATE produto SET nome = :nome, descricao = :descricao, valor = :valor, categoria_id = :categoria WHERE id = :id";
-        //Realizo a conexão com o banco de dados
-        $conexao = conectarBanco();
-        //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
-        $stmt = $conexao->prepare($sql);
-        $stmt->bindValue(":nome", $nome);
-        $stmt->bindValue(":descricao", $descricao);
-        $stmt->bindValue(":valor", $valor);
-        $stmt->bindValue(":categoria", $categoria);
-        $stmt->bindValue(":id", $id);
-        //Executo a consulta, retornando o seu resultado
-        return $stmt->execute();
-    } catch (Exception $e){
-        //Caso aconteça algum erro, retorno o valor 0
-        return 0;
-    }
-}
-
-//Função que realiza a exclusão de um produto
-function excluirSessoes($id){
-    try{ 
-        //Defino uma variável para declarar o SQL a ser executado
-        $sql = "DELETE FROM produto WHERE id = :id";
-        //Realizo a conexão com o banco de dados
-        $conexao = conectarBanco();
-        //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
-        $stmt = $conexao->prepare($sql);
-        $stmt->bindValue(":id", $id);
-        //Executo a consulta, retornando o seu resultado
-        return $stmt->execute();
-    } catch (Exception $e){
-        //Caso aconteça algum erro, retorno o valor 0
-        return 0;
-    }
-}

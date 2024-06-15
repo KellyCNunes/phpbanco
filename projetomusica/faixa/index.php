@@ -27,10 +27,10 @@
                 <td><?= $l['data'] ?> <?= $l['Horario'] ?></td> 
                 
                 <td>
-                    <a href="alterar_faixa.php?id=<?= $l['id'] ?>" class="btn btn-danger">
+                    <a href="alterarfaixa.php?id=<?= $l['id'] ?>" class="btn btn-danger">
                         Alterar
                     </a>
-                    <a href="excluir_faixa.php?id=<?= $l['id'] ?>" class="btn btn-danger">
+                    <a href="excluirfaixa.php?id=<?= $l['id'] ?>" class="btn btn-danger">
                         Excluir
                     </a>
                 </td> 

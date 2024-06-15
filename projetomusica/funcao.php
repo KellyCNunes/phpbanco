@@ -1,7 +1,7 @@
 <?php
 
     function conectarBanco(){
-        $conexao = new PDO("mysql:host=localhost; dbname=bancophp", "root", "");
+        $conexao = new PDO("mysql:host=localhost; dbname=mydb", "root", "");
         return $conexao;
     }
     
@@ -80,8 +80,7 @@
 
     function listarMusicos(){
         $conexao = conectarBanco();
-        $stmt = $conexao->query("SELECT * FROM Musicos");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $conexao->query("SELECT * FROM Musicos");
     }
 
 
@@ -195,7 +194,7 @@ function consultarMusicosId($id){
 }
 
 //Função que realiza a alteração de um produto
-function alterarMusicos($nome, $descricao, $valor, $categoria, $id){
+function alterarMusicos($nome, $descricao, $valor, $categoria){
     try{ 
         //Defino uma variável para declarar o SQL a ser executado
         $sql = "UPDATE produto SET nome = :nome, descricao = :descricao, valor = :valor, categoria_id = :categoria WHERE id = :id";
@@ -207,7 +206,7 @@ function alterarMusicos($nome, $descricao, $valor, $categoria, $id){
         $stmt->bindValue(":descricao", $descricao);
         $stmt->bindValue(":valor", $valor);
         $stmt->bindValue(":categoria", $categoria);
-        $stmt->bindValue(":id", $id);
+        
         //Executo a consulta, retornando o seu resultado
         return $stmt->execute();
     } catch (Exception $e){

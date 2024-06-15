@@ -9,7 +9,7 @@
         $id = $_SESSION['id'];
     if ($_POST){
         $nome = $_POST['nome'];
-        $duracao = $_POST['duracao'];
+        $duracao = $_POST['duracao_gravacao'];
         $sessao = $_POST['sessoes'];
         
         if($nome != "" && $duracao != "" ){

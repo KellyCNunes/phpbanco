@@ -3,7 +3,7 @@
 
 ?>
 <h3> Adicionar Faixa </h3>
-    <form>
+    <form action="" method = "POST">
         <div class="row">
             <label for="nome" class="form-label">Informe o nome</label>
             <input type ="text" class="form-control" name="nome"> 

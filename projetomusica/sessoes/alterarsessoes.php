@@ -1,5 +1,6 @@
 <?php
     require_once("../cabecalho.php");
+    
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
         session_start();
@@ -7,12 +8,12 @@
     } else
         $id = $_SESSION['id'];
     if ($_POST){
-        $nome = $_POST['nome'];
-        $instrumento = $_POST['instrumento'];
-        $estilo = $_POST['estilo'];
+        $data = $_POST['data'];
+        $Horario = $_POST['horario'];
+        $musico = $_POST['musico'];
         
-        if($titulo != "" && $data_gravacao != "" && $musico != "" ){
-            if(alterarMusicos($nome,$instrumento,$estilo, $_SESSION['id']))
+        if($nome != "" && $duracao != "" ){
+            if(alterarFaixa($data,$horario,$musico['id']))
                 echo "Registro alterado com sucesso!";
             else
                 echo "Erro ao alterar o registro!";
@@ -20,29 +21,28 @@
             echo "Preencha todos os campos!";
         }
     }
-    $dados = consultarMusicosId($id);
+    $dados = consultarSessoesId($id);
 ?>
 
-    <h3>Alterar Musico</h3>
+    <h3>Alterar Sessoes</h3>
     <form action="" method="POST">
         <div class="row">
             <div class="col">
-                <label for="nome" class="form-label">Informe o nome </label>
-                <input type="text" class="form-control" name="nome" 
-                    value="<?= $dados['nome'] ?>">
+                <label for="data" class="form-label">Informe a data</label>
+                <input type="text" class="form-control" name="data" 
+                    value="<?= $dados['data'] ?>">
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <label for="instrumento" class="form-label">Informe o instrumento</label>
-                <input type="text" class="form-control"     name="instrumento" value="<?= $dados['instrumento'] ?>">
+            <label for="horario" class="form-label">Informe o horário</label>
+                <input type="text" class="form-control"     name="horario" value="<?= $dados['horario'] ?>">
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <label for="estilo" class="form-label">Informe o estilo musical
-                </label>
-                <input type="text" class="form-control"     name="estilo" value="<?= $dados['estilo'] ?>">
+            <label for="musico" class="form-label">Informe o musico</label>
+                <input type="text" class="form-control"     name="musico" value="<?= $dados['musico'] ?>">
             </div>
         </div>
         
